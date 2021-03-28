@@ -1,0 +1,66 @@
+<div class="container signup">
+    {{!-- <h5 class="card-header text-center form-header">Registration Form</h5> --}}
+
+    <form role="form" data-toggle="validator" action="/newuser" method="post">
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" class="form-input" name="username" maxlength="10" minlength="3"
+                pattern="^[a-zA-Z0-9_.-]*$" id="inputUsername" placeholder="Username" required
+                data-error="Please enter UserName.">
+            <div role="alert" id="createAlertUser">
+                <p class="verifyerror">username alreay taken</p>
+            </div>
+            <!-- Error -->
+            <div class="help-block with-errors"></div>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" class="form-input" id="inputEmail" placeholder="Email"
+                data-error="Please enter valid Email id." required>
+
+            <!-- Error -->
+            <div class="help-block with-errors"></div>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" data-minlength="8" class="form-input" id="inputPassword" name="password"
+                data-error="Please enter atleast 8 characters" placeholder="Password" required />
+
+            <!-- Error -->
+            <div class="help-block  with-errors"></div>
+
+        </div>
+
+        <div class="form-group">
+            <label>Confirm Password</label>
+            <input type="password" class="form-input" id="inputConfirmPassword" name="confirmpassword"
+                data-match="#inputPassword" data-match-error="Password don't match" placeholder="Confirm Password"
+                required />
+
+            <!-- Error -->
+            <div class="help-block with-errors"></div>
+
+        </div>
+        <div style="margin:10px">
+            <button type="submit" class="submit-btn btn-block">Submit</button>
+        </div>
+
+    </form>
+    <div class="redirect-btn">
+        <a href="/"> <button class="login-btn">Existing User? Log in</button></a>
+    </div>
+</div>
+<script>
+    let errornewUser = document.getElementById('createAlertUser')
+    const urlParams = new URLSearchParams(window.location.search);
+    const myParam = urlParams.get('createuser_error');
+    if (myParam) {
+        if (myParam == "username alreay taken") {
+            errornewUser.style.display = "block";
+
+        }
+
+    }
+</script>

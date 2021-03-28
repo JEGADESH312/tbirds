@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirServe M-360</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    </link>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+    <link rel="stylesheet" href=" /style.css">
+    <link rel="stylesheet" href=" /css/main.css">
+</head>
+
+<body><div class="App"> 
+    <header>
+
+        <h1>
+            <div class="logoTop ">
+                <img src="/img/airservelogo.png" alt="AirServe" />
+                 
+            </div>
+            <div class="logoBottom">
+                Department of Mines and Geology Viewer
+            </div>
+        </h1>
+        <div class="log-btn">
+            {{#if user}}
+            <a href="/logout" ><button class="userbtn">Logout</button></a>
+            {{else if newuser}}
+             {{!-- <a href="/" ><button  id="login" onclick="showlogin()" class="userbtn">Login</button></a> --}}
+       
+            {{else}}
+            <a style="margin-right: 15px;" href="/signup" ><button class="userbtn">SignUp</button></a>
+            <button  id="login" onclick="showlogin()" class="userbtn">Login</button>
+            {{/if}}
+        </div>
+    </header>
+    </div>
+    <div class="homevideo">
+        <video autoplay muted loop id="myVideo">
+            <source src="/homepage-video.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    {{{body}}}
+
+
+    <div class="container login" id="loginform"> 
+        <form role="form" data-toggle="validator" action="/login" method="post">
+
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" class="form-control" name="username" data-error="Please enter UserName"
+                    placeholder="Username" id="userinput" required>
+                <div role="alert" id="loginAlertUser">
+                    <p class="verifyerror">Username is Incorrect</p>
+                </div>
+                <!-- Error -->
+                <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <div class="form-group">
+                    <input type="password" data-minlength="8" class="form-control" name="password"
+                        data-error="Have atleast 8 characters" placeholder="Password" id="passwordinput" required />
+                    <div role="alert" id="loginAlertPassword">
+                        <p class="verifyerror" >Password is Incorrect</p>
+                    </div>
+                    <!-- Error -->
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="submit-btn btn-block" id="submit">Log In</button>
+            </div>
+
+        </form>
+
+        {{!-- <div class="redirect-btn">
+            <a href="/signup"> <button class="login-btn ">Create new User</button></a>
+        </div> --}}
+
+    </div>
+
+    <script>
+        let errorUser = document.getElementById('loginAlertUser')
+        let errorPassword = document.getElementById('loginAlertPassword')
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('error');
+        if (myParam) {
+            document.getElementById('loginform').style.display = "block"
+            if (myParam == "Password is InCorrect") {
+                errorPassword.style.display = "block";
+
+            }
+            else if(myParam == "Username is InCorrect") {
+                errorUser.style.display = "block";
+            }
+        }
+
+        userinput.onfocus = function () {
+            errorUser.style.display = "none";
+        }
+        passwordinput.onfocus = function () {
+            errorPassword.style.display = "none";
+        }
+  document.getElementById('submit').addEventListener('click',()=>{
+      errorPassword.style.display = "none";
+      errorUser.style.display = "none";
+  })
+        function showlogin() {
+            document.getElementById('loginform').classList.add("active");
+            document.getElementById('login').style.display = "none";
+             
+        }
+    </script>
+</body>
+
+</html>

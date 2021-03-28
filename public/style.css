@@ -1,0 +1,129 @@
+* {
+    font-family: 'Rajdhani', sans-serif;
+}
+
+*:focus {
+    outline: 0 !important;
+}
+
+body {
+    color: #dedede;
+}
+
+header {
+    z-index: 10;
+}
+
+.container {
+    position: fixed;
+    top: 70px;
+    right: 10px;
+    width: 220px;
+    padding: 10px;
+    margin: 5px;
+    background-color: #393748d0;
+    border-radius: 10px;
+}
+
+#myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+form,
+.redirect-btn {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    margin: 5px;
+}
+
+.redirect-btn {
+    margin-top: -15px;
+}
+
+.log-btn {
+    position: absolute;
+    right: 25px;
+}
+
+.login {
+    display: none;
+    max-height: 230px;
+}
+
+.active {
+    display: block;
+    animation: fade-in 1s ease;
+}
+
+.signup {
+    animation: fade-in 1s ease;
+}
+
+@keyframes fade-in {
+    from {
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+#loginAlertUser,
+#loginAlertPassword,
+#createAlertUser {
+    height: 20px;
+    padding: 0;
+    margin: 2px;
+    font-size: 13px;
+    display: none;
+}
+
+.form-control,
+.form-input,
+.verifyerror {
+    width: 180px;
+    height: 25px;
+    border-radius: 200px;
+    padding: 0.2em 1em;
+}
+
+.help-block {
+    font-size: 12px;
+    margin: 0;
+    margin-bottom: 5px;
+    color: salmon;
+    /* color: rgba(1, 221, 255, 0.651); */
+    padding-left: 10px;
+    max-height: 15px;
+}
+
+.form-group label {
+    height: 12px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+}
+
+::placeholder {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+}
+
+.verifyerror {
+    font-size: 12px;
+    color: salmon;
+    height: 20px;
+    padding: 0 8px;
+    margin-left: 10px;
+    width: 150px;
+}

@@ -1,0 +1,832 @@
+html,
+body {
+    margin: 0;
+    /* vars */
+    --airserve-blue: rgb(1, 223, 255);
+    --light-accent: #3878d9;
+    --darker-accent: #1963be;
+    --dark-accent: #393748;
+    --grey: #dedede;
+    --paper-accent: #1ab1e0;
+}
+
+* {
+    font-family: 'Rajdhani', sans-serif;
+}
+
+#root {
+    height: 100vh;
+    width: 100%;
+}
+
+.outlined {
+    background: #fff;
+    border: 2px solid var(--light-accent);
+}
+
+.filled {
+    color: #fff;
+    cursor: pointer;
+    background: var(--light-accent);
+    border: 2px solid var(--light-accent);
+    transition: background-color .2s, border-color 2s;
+}
+
+.filled:hover {
+    background: var(--darker-accent);
+    border: 2px solid var(--darker-accent);
+}
+
+.padded {
+    padding: .3em .9em;
+    border-radius: 3px;
+}
+
+
+/* resets */
+
+h1,
+h2,
+h3,
+h4 {
+    margin: 0;
+    font-weight: normal;
+}
+
+input,
+button,
+select,
+option {
+    font-size: 0.9em;
+}
+
+select {
+    cursor: pointer;
+}
+
+
+/* layout */
+
+.App {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #f8f8f8;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.App header {
+    width: 100%;
+    height: 55px;
+    background: var(--dark-accent);
+    flex-grow: 0;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: var(--airserve-blue);
+}
+
+.App h1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.App .logoTop img {
+    height: 28px;
+    margin-right: 6px;
+}
+
+.App .logoTop {
+    color: var(--airserve-blue);
+    font-size: 26px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.App .logoBottom {
+    color: #fff;
+    font-size: 10px;
+}
+
+.Dashboard {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 0;
+    justify-content: space-between;
+}
+
+.Dashboard-map-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-grow: 1;
+    height: 0;
+    overflow: hidden;
+}
+
+.FilterBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: 40px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    background: #fff;
+    font-size: 13px;
+}
+
+.FilterBar-slot {
+    position: relative;
+    margin: 0 .4em;
+}
+
+.FilterBar-slot-opener {
+    cursor: pointer;
+    font-weight: normal;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.FilterBar-search {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.FilterBar-search-input {
+    width: 11em;
+    border-radius: 3px;
+}
+
+.FilterBar-search-button {
+    padding: .2em 0;
+    height: 2em;
+    width: 2em;
+    border-radius: 3px;
+    outline: none;
+}
+
+.FilterBar-search-button img {
+    height: 100%;
+}
+
+.FilterBar-resetButton {
+    cursor: pointer;
+}
+
+.FilterBar-slot-opener:hover,
+.FilterBar-resetButton:hover {
+    color: #fff;
+    background: var(--light-accent);
+}
+
+.FilterBar-resetButton {
+    --light-accent: #aaa;
+    --dark-accent: #999;
+}
+
+.FilterBar-gap {
+    flex-grow: 8;
+    flex-shrink: 0;
+}
+
+.FilterPopup {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    min-width: 240px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px -1px rgba(0, 0, 0, .3);
+}
+
+.FilterPopup-body,
+.FilterPopup .buttonGroup {
+    padding: .5em;
+}
+
+.FilterPopup .buttonGroup {
+    border-radius: 0 0 6px 6px;
+    overflow: hidden;
+}
+
+.FilterPopup::before {
+    content: '';
+    top: -9px;
+    left: 1em;
+    display: block;
+    height: 1em;
+    width: 1em;
+    transform: rotate(45deg);
+    position: absolute;
+    background: #fff;
+    box-shadow: -2px -2px 4px 0px rgba(0, 0, 0, .15)
+}
+
+.FilterPopup .inputWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.FilterPopup input[type="text"],
+.FilterPopup input[type="number"] {
+    width: 10em;
+}
+
+.FilterPopup select {
+    width: 12em;
+}
+
+.GeoFilter-geos {
+    display: flex;
+    flex-direction: row;
+}
+
+.GeoFilter label {
+    margin-right: .7em;
+}
+
+.GeoFilter label:last-child {
+    margin-right: 0;
+}
+
+.GeoFilter label p {
+    margin: 4px 0 10px 0;
+    font-weight: bold;
+}
+
+.PlotAreaFilter-label {
+    margin: 4px 0 10px 0;
+    font-weight: bold;
+}
+
+.SearchComplete {
+    position: relative;
+    overflow: visible;
+    margin-right: .3em;
+}
+
+.SearchComplete-completions {
+    position: absolute;
+    z-index: 1000;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 2px 10px -1px rgba(0, 0, 0, .3);
+}
+
+.SearchComplete-completions strong {
+    color: var(--darker-accent);
+}
+
+.SearchComplete-suggestion {
+    padding: .3em .7em;
+    border-bottom: 1px solid #b7b7b7;
+    cursor: pointer;
+}
+
+.SearchComplete-suggestion:last-child {
+    border-bottom: 0;
+}
+
+.SearchComplete-suggestion:hover,
+.SearchComplete-suggestion.selected {
+    background: #eee;
+}
+
+.PropertyTypeFilter {
+    width: 280px;
+}
+
+.PropertyTypeFilter-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    padding: .5em .5em .5em 0;
+}
+
+.PropertyTypeFilter .propertyTypeLabel {
+    border-radius: 5em;
+    padding: .15em .7em .1em .7em;
+}
+
+.PropertyTypeFilter p {
+    margin: .5em 0;
+}
+
+.PropertyTypeFilter input[type=checkbox] {
+    margin-right: .8em;
+}
+
+.buttonGroup {
+    background: var(--light-accent);
+}
+
+.FilterPopup .filterPopupButton {
+    margin-left: 6px;
+}
+
+.FilterPopup .filterPopupButton[disabled] {
+    opacity: .5;
+    pointer-events: none;
+}
+
+.GeoFilter .filterPopupButton,
+.PropertyTypeFilter .filterPopupButton {
+    float: right;
+    cursor: pointer;
+    color: var(--darker-accent);
+}
+
+.GeoFilter .filterPopupButton:hover,
+.PropertyTypeFilter .filterPopupButton:hover {
+    background: #eee;
+}
+
+.PlotAreaFilter input[type=number] {
+    width: 5em;
+    margin: 0 .3em;
+}
+
+.GeoOverlayView {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    font-size: 13px;
+    color: #fff;
+    text-shadow: 0 0 3px #000;
+    font-weight: bold;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.GeoOverlayView-propertyCount {
+    font-size: 12px;
+}
+
+.PropertyOverlayView {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    font-size: 14px;
+    color: #fff;
+    text-shadow: 0 0 3px #000;
+    font-weight: bold;
+    display: none;
+    white-space: nowrap;
+}
+
+.MapTypeId-roadmap .GeoOverlayView,
+.MapTypeId-roadmap .PropertyOverlayView,
+.MapTypeId-terrain.GeoOverlayView,
+.MapTypeId-terrain.PropertyOverlayView {
+    color: #333;
+    text-shadow: 0 0 3px #fff;
+}
+
+.PropertyOverlayView.show-popup,
+.Geo-2 .PropertyOverlayView,
+.Zoom-18 .PropertyOverlayView,
+.Zoom-19 .PropertyOverlayView,
+.Zoom-20 .PropertyOverlayView,
+.Zoom-21 .PropertyOverlayView,
+.Zoom-22 .PropertyOverlayView {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.PropertyOverlayView-inspection {
+    display: inline-block;
+    border-radius: 3px;
+    border: 1px solid #fff;
+    height: .8em;
+    width: .8em;
+    background: #aaa;
+}
+
+.GoogleMap {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.GoogleMap .map-div {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.GoogleMap .mapButtonGroup {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    left: 190px;
+    z-index: 10;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+}
+
+.GoogleMap .mapButtonGroup button {
+    background: #fff;
+    border: 0;
+    padding: 5px 15px;
+    cursor: pointer;
+    border-radius: 0;
+    border-right: 1px solid #d7d7d7;
+    height: 30px;
+    /* match Google Maps default styles */
+}
+
+.GoogleMap .mapButtonGroup button:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.GoogleMap .mapButtonGroup button:last-child {
+    border-radius: 0 4px 4px 0;
+    border-right: 0;
+}
+
+.GoogleMap .mapButtonGroup button:hover {
+    background: #eee;
+}
+
+.PropertyOverlayPopup {
+    min-height: 60px;
+    width: 180px;
+    text-shadow: none;
+    font-weight: normal;
+    color: #000;
+    background: #fff;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .25);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    padding: .33em;
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    z-index: 99999;
+    transform: translateX(-50%);
+    white-space: normal;
+}
+
+.PropertyOverlayPopup::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -19px;
+    left: 50%;
+    transform: translate(-50%, -84%) rotate(45deg);
+    height: 12px;
+    width: 12px;
+    background: #fff;
+}
+
+.PropertyOverlayPopup img {
+    height: 80px;
+    width: 80px;
+    border-radius: 5px;
+    object-fit: cover;
+    margin-right: .8em;
+    display: block;
+}
+
+.PropertyOverlayPopup .right {
+    overflow: hidden;
+}
+
+.PropertyOverlayPopup p {
+    margin: 0;
+}
+
+.Sidebar {
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 480px;
+    box-shadow: -1px -4px 4px rgba(0, 0, 0, 0.2);
+    z-index: 50;
+}
+
+.PlacesList {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.PlacesList .sidebarHeader {
+    font-weight: bold;
+    flex-grow: 0;
+    padding: .8em 12px .4em 12px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.PlacesList .placesListScrollbox {
+    flex-grow: 1;
+    height: 0;
+    overflow-y: auto;
+}
+
+.PLC-wrapper {
+    float: left;
+    padding: 6px;
+    overflow: hidden;
+    font-size: .7em;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+.PlaceListingCard {
+    padding: 7px;
+    box-sizing: border-box;
+    height: 450px;
+    position: relative;
+    border-bottom: 4px solid var(--light-accent);
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
+}
+
+.PLC-wrapper.cursor-pointer .PLC-image {
+    cursor: pointer;
+}
+
+.PlaceListingCard p {
+    margin: 4px 0;
+    line-height: 1.3em;
+}
+
+.PlaceListingCard b {
+    color: var(--dark-accent);
+}
+
+.PLC-image {
+    overflow: hidden;
+    width: 100%;
+    height: 165px;
+    background: linear-gradient(to bottom right, #e6eef7, #e1e1e7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 8px;
+    border-radius: 3px;
+    position: relative;
+}
+
+.PLC-image.broken::after {
+    content: 'No image available';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--darker-accent);
+}
+
+.PLC-top-left {
+    position: absolute;
+    left: 6px;
+    background: rgba(0, 0, 0, .4);
+    color: #fff;
+    padding: 0.2em .5em;
+}
+
+.PLC-prop-id {
+    top: 6px;
+    border-radius: 3px;
+}
+
+.PLC-inspection {
+    display: inline-block;
+    border-radius: 3px;
+    height: 1em;
+    width: 1em;
+    margin-right: 6px;
+    margin-bottom: -2px;
+}
+
+.PLC-prop-summary {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: .5em .9em;
+    color: #fff;
+    text-shadow: 0 0 12px #000;
+    font-weight: bold;
+}
+
+.PLC-image img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.gm-style .controls.maptype-control.maptype-control-is-satellite .maptype-control-satellite {
+    font-weight: 700;
+}
+
+.PLC-detail {
+    margin-bottom: .5em;
+}
+
+.PLC-owner {
+    color: var(--darker-accent);
+}
+
+.PLC-detail.split {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.PLC-detail.split p {
+    flex-grow: 1;
+    padding-right: 4px;
+}
+
+.PLC-report-detail {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 4px;
+}
+
+.PLC-reports {
+    overflow: hidden;
+}
+
+.PLC-button {
+    cursor: pointer;
+    float: left;
+    padding: .1em .4em;
+    margin-bottom: .4em;
+    margin-right: .4em;
+    font-weight: bold;
+    border-radius: 3px;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.PLC-button:last-child {
+    margin-right: 0;
+}
+
+.PLC-button img {
+    height: 1.2em;
+    margin-right: 3px;
+}
+
+.ReportLightbox-wrapper {
+    position: fixed;
+    z-index: 10000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    background: rgba(0, 0, 0, .2);
+}
+
+.ReportLightbox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 2em);
+    max-width: 900px;
+    max-height: 90vh;
+    padding: 0;
+    font-size: 1rem;
+    line-height: 1.5em;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 3px 10px -1px rgba(0, 0, 0, .3);
+    display: flex;
+    flex-direction: column;
+}
+
+.ReportLightbox-header {
+    background: var(--dark-accent);
+    color: #fff;
+    padding: .5em .8em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 0;
+}
+
+.ReportLightbox .reportTitle {
+    font-weight: bold;
+}
+
+.ReportLightbox .reportCloser {
+    background: transparent;
+    color: #fff;
+    border: 0;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.ReportLightbox section {
+    padding: .5em .8em;
+    overflow-y: auto;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.ReportLightbox .sectionTitle {
+    font-weight: bold;
+}
+
+.ReportLightbox-image {
+    width: 100%;
+}
+
+.ReportLightbox-propertyDetails {
+    min-height: 60vh;
+}
+
+.ReportLightbox .noReportAvailable {
+    color: var(--darker-accent);
+    font-size: 1.5em;
+    text-align: center;
+    line-height: 60vh;
+}
+
+.CesiumLightbox-wrapper {
+    position: absolute;
+    top: 9%;
+    left: 5%;
+    height: 89vh;
+    width: 90vw;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 3px 10px -1px rgba(0, 0, 0, .3);
+    border: 2px solid;
+    z-index: 1000;
+}
+
+.cesium-tiles {
+    position: absolute;
+    height: 93%;
+    background-color: var(--grey);
+    color: var(--grey);
+    width: 100%;
+    display: flex;
+}
+
+.CesiumPersonnel-3d {
+    width: 100%;
+    height: 100%;
+}
+
+.CesiumPersonnel-3d iframe {
+    height: 90vh;
+    width: 100%;
+}
+
+#logoutbtn,
+.userbtn,
+.login-btn,
+.submit-btn {
+    background-color: var(--dark-accent);
+    border: 1px solid var( --airserve-blue);
+    font-size: 0.9em;
+    color: var( --airserve-blue);
+    border-radius: 20px;
+    padding: 0.2em 1em;
+}
+
+#logoutbtn:focus {
+    outline: 0 !important;
+}
